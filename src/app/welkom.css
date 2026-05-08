@@ -209,6 +209,15 @@
   background: var(--bg-warm);
 }
 
+/* Contact middle column — vertical hairline borders only on md+ where the
+   3-col grid is active. Mobile single-col reads as a clean stack. */
+@media (min-width: 768px) {
+  .contact-col-middle {
+    border-left: 1px solid rgba(244, 232, 210, 0.12);
+    border-right: 1px solid rgba(244, 232, 210, 0.12);
+  }
+}
+
 /* Dark section — contact/CTA. Semi-transparent so the fixed hero pool
    video shines faintly through; backdrop blur keeps text crisp. */
 .section-dark {

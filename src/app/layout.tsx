@@ -1,7 +1,15 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Fraunces, Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
-import { StoreHydrator } from "@/components/StoreHydrator"
+import "./welkom.css"
+import JsonLd from "./jsonld"
+
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  axes: ["SOFT", "WONK", "opsz"],
+  display: "swap",
+})
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,9 +21,79 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 })
 
+const SITE_URL = "https://stilwater.nl"
+const PAGE_URL = SITE_URL
+const OG_IMAGE = `${SITE_URL}/img/pool-villa.webp`
+
 export const metadata: Metadata = {
-  title: "Accreditatie — IMS",
-  description: "Accreditatiesysteem v2 — onderdeel van de IMS suite",
+  title: {
+    default: "Stilwater Zwembaden — Zwembadbouw & service sinds 1998",
+    template: "%s | Stilwater Zwembaden",
+  },
+  description:
+    "Zwembadbouwer in Utrecht voor aanleg, renovatie en onderhoud. Eigen team, tot 25 jaar garantie, 24u service. Vraag vrijblijvend een offerte aan.",
+  keywords: [
+    "zwembadbouwer",
+    "zwembad aanleg",
+    "zwembad onderhoud",
+    "zwembad renovatie",
+    "zwembad service",
+    "zwembad Utrecht",
+    "privézwembad",
+    "overloopbad",
+    "skimmerbad",
+    "spa wellness",
+    "waterzorg",
+    "lekdetectie",
+    "linerrenovatie",
+    "NVZ zwembad",
+    "Stilwater Zwembaden",
+  ],
+  authors: [{ name: "Stilwater Zwembaden", url: SITE_URL }],
+  creator: "Stilwater Zwembaden",
+  publisher: "Stilwater Zwembaden",
+  alternates: { canonical: PAGE_URL },
+  openGraph: {
+    type: "website",
+    locale: "nl_NL",
+    url: PAGE_URL,
+    siteName: "Stilwater Zwembaden",
+    title: "Stilwater Zwembaden — Zwembadbouw & service sinds 1998",
+    description:
+      "Onafhankelijke Nederlandse zwembadbouwer voor aanleg, renovatie en service. Eén team voor het hele leven van uw bad — al 25 jaar vanuit Utrecht.",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Luxe overloopbad aangelegd door Stilwater Zwembaden in een villentuin",
+        type: "image/webp",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Stilwater Zwembaden — Zwembadbouw & service",
+    description:
+      "Onafhankelijke zwembadbouwer voor aanleg, renovatie en service. Eén team voor het hele leven van uw bad.",
+    images: [OG_IMAGE],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  formatDetection: {
+    telephone: true,
+    address: true,
+    email: true,
+  },
 }
 
 export default function RootLayout({
@@ -26,10 +104,11 @@ export default function RootLayout({
   return (
     <html
       lang="nl"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+      className={`${fraunces.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-zinc-50 font-sans text-foreground">
-        <StoreHydrator />
+      <body className="welkom-shell min-h-full font-sans">
+        <JsonLd />
         {children}
       </body>
     </html>

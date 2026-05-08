@@ -285,7 +285,29 @@ export default function Welkom() {
 
     let cleanupVideo: (() => void) | undefined
     if (v) {
-      v.pause()
+      // iOS Safari needs a play()→pause() priming round before currentTime
+      // seeks render frames. Mobile Chrome benefits too. Without this the
+      // hero can show a blank/black frame on phones.
+      v.muted = true
+      v.playsInline = true
+      const prime = v.play()
+      if (prime && typeof prime.then === "function") {
+        prime.then(() => v.pause()).catch(() => {
+          // Autoplay blocked; retry on first user interaction.
+          const retry = () => {
+            v.play().then(() => v.pause()).catch(() => {})
+            window.removeEventListener("touchstart", retry)
+            window.removeEventListener("pointerdown", retry)
+            window.removeEventListener("scroll", retry)
+          }
+          window.addEventListener("touchstart", retry, { once: true, passive: true })
+          window.addEventListener("pointerdown", retry, { once: true })
+          window.addEventListener("scroll", retry, { once: true, passive: true })
+        })
+      } else {
+        v.pause()
+      }
+
       const onMeta = () => {
         duration = v.duration || 0
         onScroll()
@@ -418,7 +440,7 @@ export default function Welkom() {
                   }}
                   className="serif absolute block max-w-5xl px-6 text-center leading-[0.93] tracking-tight"
                   style={{
-                    fontSize: "clamp(1.85rem, 8vw, 9rem)",
+                    fontSize: "clamp(1.45rem, 7.4vw, 9rem)",
                     opacity: i === 0 ? 1 : 0,
                     willChange: "opacity, transform, filter",
                   }}

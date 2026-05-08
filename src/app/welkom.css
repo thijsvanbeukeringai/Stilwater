@@ -116,13 +116,22 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Default desktop framing keeps the pool slightly above center. */
+  object-position: 50% 45%;
   transform-origin: 50% 45%;
   will-change: transform, filter;
-  /* Brighten + warm the video itself as it gets cleaner */
   filter:
     brightness(calc(0.85 + var(--reveal) * 0.25))
     saturate(calc(0.85 + var(--reveal) * 0.3))
     contrast(calc(0.95 + var(--reveal) * 0.08));
+}
+
+/* Portrait phones crop a 16:9 video heavily on the sides. Anchor the frame
+   so the pool surface stays in view rather than cutting to deck/sky. */
+@media (max-width: 767px) {
+  .video-stage video {
+    object-position: 50% 38%;
+  }
 }
 
 .video-stage .vignette {

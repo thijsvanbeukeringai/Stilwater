@@ -563,11 +563,14 @@ html, body {
   .video-stage video,
   .reveal,
   .marquee,
-  .lux-grain,
   .img-reveal {
     animation: none !important;
-    opacity: 1 !important;
     transform: none !important;
+  }
+  .reveal,
+  .marquee,
+  .img-reveal {
+    opacity: 1 !important;
     filter: none !important;
   }
 
@@ -577,18 +580,25 @@ html, body {
     --reveal: 1 !important;
   }
 
-  /* Freeze cream-veil and bloom to end-state opacity */
+  /* Freeze the overlay layers at their *new* end-state opacities (cream
+     caps at 0.5, not 0.94 — matches the live narrative). The grain is
+     deliberately NOT forced to 1; let its calc keep it subtle. */
   .video-stage .lux-cream-veil {
-    opacity: 0.94 !important;
+    opacity: 0.5 !important;
   }
   .video-stage .lux-bloom {
-    opacity: 1.4 !important;
+    opacity: 1 !important;
   }
   .video-stage .lux-tint {
-    opacity: 0 !important;
+    opacity: 0.22 !important;
   }
   .video-stage .vignette {
     opacity: 0.45 !important;
+  }
+  .video-stage .lux-grain {
+    /* explicit subtle value — no forced opacity:1 anymore */
+    opacity: 0.06 !important;
+    animation: none !important;
   }
 
   /* Cursor blob: hide entirely — no pointer-tracking motion */

@@ -2,6 +2,14 @@
    STILWATER ZWEMBADEN — premium cream/paper theme
    ========================================================================== */
 
+/* Defensive guard: a single absolutely-positioned cinema corner element
+   sneaking past the viewport on a narrow phone shouldn't create a
+   horizontal scrollbar on the whole document. `clip` keeps the layout
+   intact without creating a scroll context (unlike overflow: hidden). */
+html, body {
+  overflow-x: clip;
+}
+
 .welkom-shell {
   /* CREAM / PAPER PALETTE — luxury magazine */
   --bg-paper:    #f6efe1;        /* base — warm vellum */

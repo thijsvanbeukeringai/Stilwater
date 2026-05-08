@@ -415,13 +415,14 @@ export default function Welkom() {
             ref={heroStickyRef}
             className="sticky top-0 flex h-[100svh] items-center justify-center px-6 md:px-12"
           >
-            {/* Provenance line — centered with twin hairlines */}
-            <div className="absolute left-1/2 top-[22vh] flex -translate-x-1/2 items-center gap-4 whitespace-nowrap">
-              <span className="block h-px w-8" style={{ background: "var(--hero-rule, rgba(244,232,210,0.4))" }} />
-              <p className="text-[10px] uppercase tracking-[0.42em]" style={{ color: "var(--hero-quiet, rgba(244,232,210,0.55))" }}>
+            {/* Provenance line — centered. Hairlines hidden on mobile so the
+                whole line never exceeds the viewport. */}
+            <div className="absolute left-1/2 top-[22vh] flex -translate-x-1/2 items-center gap-4 whitespace-nowrap px-4">
+              <span className="hidden h-px w-8 sm:block" style={{ background: "var(--hero-rule, rgba(244,232,210,0.4))" }} aria-hidden="true" />
+              <p className="text-[9px] uppercase tracking-[0.32em] sm:text-[10px] sm:tracking-[0.42em]" style={{ color: "var(--hero-quiet, rgba(244,232,210,0.55))" }}>
                 Zwembadbouw &amp; service · sinds 1998
               </p>
-              <span className="block h-px w-8" style={{ background: "var(--hero-rule, rgba(244,232,210,0.4))" }} />
+              <span className="hidden h-px w-8 sm:block" style={{ background: "var(--hero-rule, rgba(244,232,210,0.4))" }} aria-hidden="true" />
             </div>
 
             {/* Single page heading for screen readers; visual stages are decorative spans */}
